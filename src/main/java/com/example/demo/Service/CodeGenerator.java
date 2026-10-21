@@ -4,10 +4,10 @@ import java.security.SecureRandom;
 
 public class CodeGenerator {
     private final String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; //62 symbol max
-    int default_length;
+    int default_length = 7;
     SecureRandom random = new SecureRandom();
 
-    String generator(){
+    String generate(){
         StringBuilder sb = new StringBuilder(default_length);
         for(int i = 0; i < default_length; i++){
             int randomIndex = random.nextInt(alphabet.length());
