@@ -1,6 +1,5 @@
-package com.example.demo.Model;
+package com.example.demo.model;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 
 public class Link {
@@ -10,50 +9,48 @@ public class Link {
     private Instant createdAt;
     private Instant expireAt;
 
-    Link(){}
-    Link(String url){
+    public Link(){}
+    public Link(String url){
         this.originalUrl = url;
     }
 
-    void setOriginalUrl(String s) {
+    public void setOriginalUrl(String s) {
         this.originalUrl = s;
     }
 
-    void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    void setCode(String code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
-    void setCreatedAt(Instant crA) {
+    public void setCreatedAt(Instant crA) {
         this.createdAt = crA;
     }
 
-    void setExpireAt(Instant expA) {
+    public void setExpireAt(Instant expA) {
         this.expireAt = expA;
     }
 
-    String getOriginalUrl(){
+    public String getOriginalUrl(){
         return this.originalUrl;
     }
 
-    String getCode(){
+    public String getCode(){
         return this.code;
     }
 
-    Long getId(){
+    public Long getId(){
         return this.id;
     }
 
-    Instant getCreatedAt(){
+    public Instant getCreatedAt(){
         return this.createdAt;
     }
 
-    Instant getExpireAt(){
+    public Instant getExpireAt(){
         return this.expireAt;
     }
-
-
 }
