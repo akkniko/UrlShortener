@@ -1,4 +1,8 @@
 package com.example.demo.dto;
 
-public class CreateLinkRequest {
+import java.time.Instant;
+
+public record CreateLinkRequest(String originalUrl, String alias, Instant expireAt) {
+
+
 }

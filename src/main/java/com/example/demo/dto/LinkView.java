@@ -1,4 +1,9 @@
 package com.example.demo.dto;
 
-public class LinkView {
+import java.time.Instant;
+
+public record LinkView(String shortUrl, String originalUrl,
+                       Instant createdAt, Instant expireAt,
+                       int numClicks ) {
+
 }
