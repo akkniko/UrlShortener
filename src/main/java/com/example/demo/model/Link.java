@@ -12,7 +12,7 @@ public class Link {
 //    public Link(){}
     public Link(String url){
         this.originalUrl = url;
-
+        this.createdAt = Instant.now();
     }
 
     public void setOriginalUrl(String s) {
