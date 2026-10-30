@@ -22,7 +22,7 @@ public class LinkService {
         this.codeGenerator = cg;
     }
 
-    LinkService create(CreateLinkRequest request){
+    LinkView create(CreateLinkRequest request){
         if(request == null || request.originalUrl().isBlank())
         {
             throw new IllegalArgumentException("Url must be non-empty");
@@ -35,14 +35,10 @@ public class LinkService {
         l.setCode(codeGenerator.generate());
         String code = l.getCode();
 
-        //в конструктор LinkView надо передать время создания, короткую
-        // и длинную ссылку, время жизни
-        LinkRepository.save(l);
-        //логика такая: создаю все поля, которые нужны в LinkView, все сохраняю в репозиторий и
-        //делаю return LinkView lv = new LinkView(...)
-        //return new LinkView();
+        Link saved = linkRepository.save(l);
+        return new LinkView(saved.getCode(), saved.getOriginalUrl(), saved.getCreatedAt(),
+                saved.getExpireAt());
     }
-
 }
 
 
