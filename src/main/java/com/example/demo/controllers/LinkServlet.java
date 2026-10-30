@@ -12,6 +12,7 @@ public class LinkServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
     {
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/plain;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<h1>LinkServlet<h1>");
@@ -22,6 +23,7 @@ public class LinkServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        request.setCharacterEncoding("UTF-8");
 
     }
 

@@ -8,12 +8,12 @@ public class CodeGenerator {
     SecureRandom random = new SecureRandom();
 
     String generate(){
-        StringBuilder sb = new StringBuilder(default_length);
-        for(int i = 0; i < default_length; i++){
-            int randomIndex = random.nextInt(alphabet.length());
-            sb.append(alphabet.charAt(randomIndex));
-        }
-        return sb.toString();
+     StringBuilder sb = new StringBuilder();
+     for(int i =0; i < default_length; i++){
+         int tmp = random.nextInt(alphabet.length());
+         sb.append(alphabet.charAt(tmp));
+     }
+     return sb.toString();
     }
 
 

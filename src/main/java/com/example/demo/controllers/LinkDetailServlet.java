@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
-public class LinkDetailServlet {
+import jakarta.servlet.http.HttpServlet;
+
+public class LinkDetailServlet extends HttpServlet {
 
 
 
