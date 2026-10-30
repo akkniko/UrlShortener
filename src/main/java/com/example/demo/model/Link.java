@@ -9,9 +9,10 @@ public class Link {
     private Instant createdAt;
     private Instant expireAt;
 
-    public Link(){}
+//    public Link(){}
     public Link(String url){
         this.originalUrl = url;
+
     }
 
     public void setOriginalUrl(String s) {
