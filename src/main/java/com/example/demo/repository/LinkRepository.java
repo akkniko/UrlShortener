@@ -6,4 +6,6 @@ public interface LinkRepository {
     Link findByOriginalURL(String originalUrl);
     Link findByCode(String code);
     Link deleteById(Long id);
+    Link save(String originalUrl);
+    Link save(Link l);
 }
