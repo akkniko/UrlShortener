@@ -9,7 +9,6 @@ public class Link {
     private Instant createdAt;
     private Instant expireAt;
 
-//    public Link(){}
     public Link(String url){
         this.originalUrl = url;
         this.createdAt = Instant.now();
@@ -27,9 +26,6 @@ public class Link {
         this.code = code;
     }
 
-    public void setCreatedAt(Instant crA) {
-        this.createdAt = crA;
-    }
 
     public void setExpireAt(Instant expA) {
         this.expireAt = expA;
