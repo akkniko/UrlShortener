@@ -20,7 +20,7 @@ public class LinkService {
     }
 
     LinkView create(CreateLinkRequest request){
-        if(request == null || request.originalUrl().isBlank() || request.originalUrl() == null)
+        if(request == null || request.originalUrl() == null || request.originalUrl().isBlank())
         {
             throw new IllegalArgumentException("Url must be non-empty");
         }
@@ -36,7 +36,7 @@ public class LinkService {
         String code = l.getCode();
         Link saved = linkRepository.save(l);
 
-        return new LinkView(saved.getCode(), saved.getOriginalUrl(), saved.getCreatedAt());
+        return new LinkView(saved.getCode(), saved.getOriginalUrl(), saved.getCreatedAt(), saved.getExpireAt());
     }
 }
 
