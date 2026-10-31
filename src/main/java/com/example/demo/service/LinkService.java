@@ -19,7 +19,7 @@ public class LinkService {
         this.codeGenerator = cg;
     }
 
-    LinkView create(CreateLinkRequest request){
+    public LinkView create(CreateLinkRequest request){
         if(request == null || request.originalUrl() == null || request.originalUrl().isBlank())
         {
             throw new IllegalArgumentException("Url must be non-empty");
