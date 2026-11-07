@@ -14,6 +14,11 @@ public class Link {
         this.createdAt = Instant.now();
     }
 
+    public Link(String url, Instant createdAt){
+        this.originalUrl = url;
+        this.createdAt = createdAt;
+    }
+
     public void setOriginalUrl(String s) {
         this.originalUrl = s;
     }
