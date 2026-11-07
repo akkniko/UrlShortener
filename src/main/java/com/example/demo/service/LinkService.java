@@ -34,7 +34,7 @@ public class LinkService {
         //генерация кода
         l.setCode(codeGenerator.generate());
         String code = l.getCode();
-        Link saved = linkRepository.save(l);
+        Link saved = linkRepository.save(String.valueOf(l)); //todo
 
         return new LinkView(saved.getCode(), saved.getOriginalUrl(), saved.getCreatedAt(), saved.getExpireAt());
     }
