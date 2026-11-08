@@ -1,9 +1,7 @@
-package com.example.demo.dto;
+package com.example.demo.controllers;
 
-import java.util.List;
+import jakarta.servlet.http.HttpServlet;
 
-public record LinkDetails(LinkView link, long totalClicks, List<DayStat> dailyStats) {
-    public LinkDetails {
-        dailyStats = List.copyOf(dailyStats);
-    }
+public class LinkDetailServlet extends HttpServlet {
+
 }

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>URL Shortener</title>
+    <style>
+        :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+        body { max-width: 760px; margin: 48px auto; padding: 0 20px; line-height: 1.5; }
+        h1 { margin-bottom: 8px; }
+        form, section { border: 1px solid #8886; border-radius: 10px; padding: 20px; margin: 20px 0; }
+        label { display: block; margin: 12px 0 5px; }
+        input { box-sizing: border-box; width: 100%; padding: 10px; font: inherit; }
+        button { margin-top: 14px; padding: 10px 16px; font: inherit; cursor: pointer; }
+        pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+        .muted { opacity: .7; }
+        #message { min-height: 1.5em; }
+    </style>
+</head>
+<body>
+<h1>URL Shortener</h1>
+<p class="muted">Сокращение ссылок с возможностью задать собственный алиас и посмотреть статистику переходов.</p>
+
+<form id="create-form">
+    <h2>Создать короткую ссылку</h2>
+    <label for="original-url">Исходный URL</label>
+    <input id="original-url" name="originalUrl" type="url" placeholder="https://example.com/long/path" required maxlength="2048">
+    <label for="alias">Свой алиас (необязательно)</label>
+    <input id="alias" name="alias" type="text" placeholder="my-link" maxlength="32" pattern="[A-Za-z0-9_-]{1,32}">
+    <button type="submit">Создать</button>
+    <p id="message" role="status"></p>
+    <div id="created-result" hidden>
+        <strong>Короткая ссылка:</strong>
+        <p><a id="short-url" href="#" target="_blank" rel="noopener noreferrer"></a></p>
+        <a id="created-stats" href="#stats">Посмотреть статистику</a>
+    </div>
+</form>
+
+<section id="stats">
+    <h2>Статистика ссылки</h2>
+    <label for="stats-code">Код ссылки</label>
+    <input id="stats-code" type="text" placeholder="Введите короткий код">
+    <button id="load-stats" type="button">Показать статистику</button>
+    <div id="stats-result" aria-live="polite"></div>
+</section>
+
+<script>
+    const createForm = document.getElementById('create-form');
+    const message = document.getElementById('message');
+    const createdResult = document.getElementById('created-result');
+
+    createForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        message.textContent = 'Создание...';
+        createdResult.hidden = true;
+        const payload = {
+            originalUrl: document.getElementById('original-url').value,
+            alias: document.getElementById('alias').value || null
+        };
+        try {
+            const response = await fetch('/api/links', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || 'Не удалось создать ссылку');
+            const shortUrl = `${location.origin}/r/${encodeURIComponent(data.code)}`;
+            document.getElementById('short-url').href = shortUrl;
+            document.getElementById('short-url').textContent = shortUrl;
+            document.getElementById('stats-code').value = data.code;
+            document.getElementById('created-stats').href = '#stats';
+            createdResult.hidden = false;
+            message.textContent = `Ссылка создана. Действует до: ${new Date(data.expireAt).toLocaleString()}`;
+        } catch (error) {
+            message.textContent = error.message;
+        }
+    });
+
+    document.getElementById('load-stats').addEventListener('click', async () => {
+        const code = document.getElementById('stats-code').value.trim();
+        const result = document.getElementById('stats-result');
+        if (!code) { result.textContent = 'Введите код ссылки.'; return; }
+        result.textContent = 'Загрузка...';
+        try {
+            const response = await fetch(`/api/links/${encodeURIComponent(code)}`);
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || 'Не удалось загрузить статистику');
+            const rows = data.dailyStats.map(item => `<tr><td>${escapeHtml(item.day)}</td><td>${item.clicks}</td></tr>`).join('');
+            result.innerHTML = `<p><strong>Исходный URL:</strong> <a href="${escapeHtml(data.link.originalUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(data.link.originalUrl)}</a></p>
+                <p><strong>Всего переходов:</strong> ${data.totalClicks}</p>
+                <p><strong>Создана:</strong> ${new Date(data.link.createdAt).toLocaleString()}</p>
+                <p><strong>Истекает:</strong> ${data.link.expireAt ? new Date(data.link.expireAt).toLocaleString() : 'без срока'}</p>
+                <table><thead><tr><th>День (UTC)</th><th>Переходы</th></tr></thead><tbody>${rows}</tbody></table>`;
+        } catch (error) {
+            result.textContent = error.message;
+        }
+    });
+
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, character => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[character]);
+    }
+</script>
+</body>
+</html>
