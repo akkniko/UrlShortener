@@ -1,12 +1,12 @@
 package com.example.demo.repository;
 
+import com.example.demo.dto.DayStat;
 import com.example.demo.model.Click;
 
-import java.time.Instant;
+import java.util.List;
 
 public interface ClickRepository {
-     int getNumClicks(Long id);
-     Instant getTimeClick(Long id);
-     Click save(Click c);
-     int sumClickByDay(int day);
+     Click save(Click click);
+     long countByLinkId(Long linkId);
+     List<DayStat> findDailyStatsByLinkId(Long linkId);
 }
