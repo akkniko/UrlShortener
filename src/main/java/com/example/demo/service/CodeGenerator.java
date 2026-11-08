@@ -1,32 +1,33 @@
 package com.example.demo.service;
 
 import java.security.SecureRandom;
+import java.util.Objects;
 
 public class CodeGenerator {
-    private final String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; //62 symbol max
-    int default_length = 7;
-    SecureRandom random = new SecureRandom();
+    private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static final int DEFAULT_LENGTH = 7;
+    private final SecureRandom random;
 
-    String generate(){
-     StringBuilder sb = new StringBuilder();
-     for(int i =0; i < default_length; i++){
-         int tmp = random.nextInt(alphabet.length());
-         sb.append(alphabet.charAt(tmp));
-     }
-     return sb.toString();
+    public CodeGenerator() {
+        this(new SecureRandom());
     }
 
-
-    String generate(int length){
-        if(length <=0 ){
-            throw new IllegalArgumentException("String length must be >= 0");
-        }
-        StringBuilder sb = new StringBuilder(length);
-        for(int i = 0; i < length; i++){
-            int randomIndex = random.nextInt(alphabet.length());
-            sb.append(alphabet.charAt(randomIndex));
-        }
-        return sb.toString();
+    CodeGenerator(SecureRandom random) {
+        this.random = Objects.requireNonNull(random);
     }
 
+    public String generate() {
+        return generate(DEFAULT_LENGTH);
+    }
+
+    public String generate(int length) {
+        if (length <= 0) {
+            throw new IllegalArgumentException("Code length must be positive");
+        }
+        StringBuilder result = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            result.append(ALPHABET.charAt(random.nextInt(ALPHABET.length())));
+        }
+        return result.toString();
+    }
 }
