@@ -1,7 +1,6 @@
 package com.example.demo.exception;
-//error 404
-public class LinkNotFoundException extends ShortenerException{
-    public LinkNotFoundException(String code){
-        super("Link with code: " + code + " not found");
-    }
+
+public class LinkNotFoundException extends ShortenerException {
+    private static final long serialVersionUID = 1L;
+    public LinkNotFoundException(String code) { super("Link with code '" + code + "' was not found"); }
 }

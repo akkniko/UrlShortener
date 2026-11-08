@@ -1,11 +1,7 @@
 package com.example.demo.exception;
 
-//error: 400
-public class InvalidUrlException extends ShortenerException{
-    public InvalidUrlException(String url){
-        //url не надо подставлять в сообщение, поскольку:
-        //если слишком большой url - сообщение раздует
-        //или может быть случай url = null
-        super("invalid url");
-    }
+public class InvalidUrlException extends ShortenerException {
+    private static final long serialVersionUID = 1L;
+    public InvalidUrlException(String message) { super(message); }
+    public InvalidUrlException(String message, Throwable cause) { super(message, cause); }
 }

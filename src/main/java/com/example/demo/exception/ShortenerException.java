@@ -1,13 +1,8 @@
 package com.example.demo.exception;
 
-//RuntimeExc- исключение непроверяемое
+/** Base unchecked exception for application-specific failures. */
 public abstract class ShortenerException extends RuntimeException {
-    public ShortenerException(String message){
-        super(message);
-    }
-
-    public ShortenerException(String message, Throwable cause){
-        super(message, cause);
-    }
-
+    private static final long serialVersionUID = 1L;
+    protected ShortenerException(String message) { super(message); }
+    protected ShortenerException(String message, Throwable cause) { super(message, cause); }
 }

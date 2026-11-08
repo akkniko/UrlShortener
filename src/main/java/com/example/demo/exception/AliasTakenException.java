@@ -1,7 +1,6 @@
 package com.example.demo.exception;
-//error:409
-public class AliasTakenException extends ShortenerException{
-    public AliasTakenException(String alias){
-        super("Alias " + alias + " already taken");
-    }
+
+public class AliasTakenException extends ShortenerException {
+    private static final long serialVersionUID = 1L;
+    public AliasTakenException(String alias) { super("Alias '" + alias + "' is already taken"); }
 }
